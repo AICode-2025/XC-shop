@@ -67,7 +67,7 @@ Open http://localhost:8000 in your browser, the installation wizard will guide y
 
 Grab the latest `innoshop-vX.Y.Z.zip` from **GitHub Releases** — it ships with PHP dependencies and compiled front-end assets pre-packaged, so you only need PHP on the server:
 
-- GitHub Releases: <https://github.com/innocommerce/innoshop/releases>
+- GitHub Releases: <https://github.com/AICode-2025/XC-shop/releases>
 - Official Site: <https://www.innoshop.com>
 
 ```bash
@@ -82,7 +82,7 @@ Open the site URL in your browser and follow the installation wizard to configur
 ### Option 3: Git Clone (For Contributors)
 
 ```bash
-git clone https://github.com/innocommerce/innoshop.git
+git clone https://github.com/AICode-2025/XC-shop.git
 cd innoshop
 composer install
 npm install
@@ -128,7 +128,7 @@ php artisan serve
 
 ## Contributors
 
-Thanks to the [Contributors](https://github.com/innocommerce/innoshop/graphs/contributors)
+Thanks to the [Contributors](https://github.com/AICode-2025/XC-shop/graphs/contributors)
 
 <a href="https://github.com/yushine"><img class="avatar-img" width="32px" height="32px" src="https://github.com/yushine.png"/></a>
 <a href="https://github.com/liuweixxx"><img class="avatar-img" width="32px" height="32px" src="https://github.com/liuweixxx.png"/></a>

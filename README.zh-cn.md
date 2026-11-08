@@ -67,7 +67,7 @@ php artisan serve
 
 从 **GitHub Releases** 下载 `innoshop-vX.Y.Z.zip` —— 该安装包已预装 PHP 依赖并编译前端资源，服务器只需 PHP 即可部署：
 
-- GitHub Releases：<https://github.com/innocommerce/innoshop/releases>
+- GitHub Releases：<https://github.com/AICode-2025/XC-shop/releases>
 - 官方网站：<https://www.innoshop.cn>
 
 ```bash
@@ -82,7 +82,7 @@ php artisan serve
 ### 方式三：Git Clone（适合贡献者）
 
 ```bash
-git clone https://github.com/innocommerce/innoshop.git
+git clone https://github.com/AICode-2025/XC-shop.git
 cd innoshop
 composer install
 npm install
@@ -128,7 +128,7 @@ php artisan serve
 
 ## 贡献者
 
-感谢各位开发者的支持与贡献! [Contributors](https://github.com/innocommerce/innoshop/graphs/contributors)
+感谢各位开发者的支持与贡献! [Contributors](https://github.com/AICode-2025/XC-shop/graphs/contributors)
 
 <a href="https://github.com/yushine"><img class="avatar-img" width="32px" height="32px" src="https://github.com/yushine.png"/></a>
 <a href="https://github.com/liuweixxx"><img class="avatar-img" width="32px" height="32px" src="https://github.com/liuweixxx.png"/></a>

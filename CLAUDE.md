@@ -1,5 +1,7 @@
 # CLAUDE.md
 
+> 本目录同时是全球化独立站工作区：完整规则见项目根 `AI Development Rules.md`，目录契约与版本追溯见 `临时文件/报告版本/变更记录.md`；规则优先于本文件其余开发约定。工作区导览见 `项目导览.md`。
+
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
 ## Commit Rules

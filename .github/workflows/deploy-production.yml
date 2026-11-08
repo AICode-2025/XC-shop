@@ -1,0 +1,104 @@
+name: Deploy to Production
+
+on:
+  push:
+    branches: [production]
+    paths-ignore:
+      - '临时文件/**'
+      - '**.md'
+      - '.github/**'
+  workflow_dispatch:
+    inputs:
+      sha:
+        description: '指定提交 SHA（留空则用当前分支最新）'
+        required: false
+        default: ''
+      force:
+        description: '强制重新部署'
+        type: boolean
+        default: false
+
+concurrency:
+  group: production-deploy
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Build frontend
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install & build
+        run: |
+          npm ci --no-audit --no-fund
+          npm run build
+
+      - name: Verify build output
+        run: |
+          test -f public/build/front/css/app.css || (echo "缺少 front 构建产物" && exit 1)
+          find public/build -type f | wc -l
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: build-assets
+          path: public/build
+          retention-days: 7
+
+  deploy:
+    name: Deploy to VPS
+    needs: build
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: build-assets
+          path: build-assets
+
+      - name: Package assets
+        run: tar -czf build.tar.gz -C build-assets .
+
+      - name: Setup SSH
+        env:
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_PORT: ${{ secrets.SSH_PORT || 22 }}
+          SSH_USER: ${{ secrets.SSH_USER }}
+          SSH_KEY: ${{ secrets.SSH_KEY }}
+        run: |
+          mkdir -p ~/.ssh
+          printf '%s\n' "$SSH_KEY" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -p "$SSH_PORT" -H "$SSH_HOST" >> ~/.ssh/known_hosts 2>/dev/null
+          printf 'Host target\n  HostName %s\n  Port %s\n  User %s\n  IdentityFile ~/.ssh/deploy_key\n  StrictHostKeyChecking yes\n  ConnectTimeout 30\n  ServerAliveInterval 15\n  ServerAliveCountMax 4\n' \
+            "$SSH_HOST" "$SSH_PORT" "$SSH_USER" > ~/.ssh/config
+          chmod 600 ~/.ssh/config
+
+      - name: Upload assets
+        run: |
+          for i in 1 2 3; do
+            scp build.tar.gz target:/tmp/innoshop-build-${{ github.sha }}.tar.gz && break
+            echo "scp 第 $i 次失败，重试"; sleep 5
+          done
+          ssh target "ls -lh /tmp/innoshop-build-${{ github.sha }}.tar.gz"
+
+      - name: Run deploy
+        run: |
+          SHA="${{ github.event.inputs.sha || github.sha }}"
+          FORCE="${{ github.event.inputs.force == 'true' && '--force' || '' }}"
+          ssh target "sudo /usr/local/bin/innoshop-deploy --sha ${SHA} --build /tmp/innoshop-build-${{ github.sha }}.tar.gz ${FORCE}"
+
+      - name: Verify after deploy
+        run: |
+          ssh target "curl -s -o /dev/null -w 'https_home=%{http_code}\n' -k https://127.0.0.1/ -H 'Host: shop.zwxc.cc' --max-time 20; cat /var/lib/innoshop/REVISION"
+
+      - name: Rollback on failure
+        if: failure()
+        run: |
+          echo "部署失败，执行自动回滚"
+          ssh target "sudo /usr/local/bin/innoshop-rollback prev" || true
