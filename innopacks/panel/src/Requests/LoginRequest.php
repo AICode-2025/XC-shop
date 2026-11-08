@@ -24,6 +24,18 @@ class LoginRequest extends FormRequest
     }
 
     /**
+     * Keep the legacy "email" field working for API/automation clients.
+     *
+     * @return void
+     */
+    protected function prepareForValidation(): void
+    {
+        if (! $this->filled('account') && $this->filled('email')) {
+            $this->merge(['account' => $this->input('email')]);
+        }
+    }
+
+    /**
      * Get the validation rules that apply to the request.
      *
      * @return array
@@ -31,7 +43,7 @@ class LoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email'    => 'required|email',
+            'account'  => 'required|string|max:64',
             'password' => 'required',
         ];
     }
@@ -42,8 +54,21 @@ class LoginRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'email'    => panel_trans('login.email'),
+            'account'  => panel_trans('login.account'),
             'password' => panel_trans('login.password'),
         ];
+    }
+
+    /**
+     * Admin guard credentials: match by email or username depending on input shape.
+     *
+     * @return array
+     */
+    public function credentials(): array
+    {
+        $account = trim((string) $this->input('account'));
+        $field   = filter_var($account, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+
+        return [$field => $account, 'password' => $this->input('password')];
     }
 }

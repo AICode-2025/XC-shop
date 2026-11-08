@@ -8,10 +8,10 @@
  */
 
 return [
-    'description' => 'InnoShop, innovatieve open-source e-commerce systeem',
+    'description' => 'StarShop, innovatieve open-source e-commerce systeem',
     'email'       => 'E-mail',
-    'keywords'    => 'InnoShop, Innovatief, Open-source, E-commerce, Laravel, Meertalig, Meerdere valuta, Hook, Pluginstructuur, Flexibel, Krachtig',
-    'login_index' => 'InnoShop backend inloggen',
+    'keywords'    => 'StarShop, Innovatief, Open-source, E-commerce, Laravel, Meertalig, Meerdere valuta, Hook, Pluginstructuur, Flexibel, Krachtig',
+    'login_index' => 'StarShop backend inloggen',
     'password'    => 'Wachtwoord',
-    'title'       => 'InnoShop Backend Beheer',
+    'title'       => 'StarShop Backend Beheer',
 ];

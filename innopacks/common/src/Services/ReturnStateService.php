@@ -80,8 +80,9 @@ class ReturnStateService
      */
     public function __construct(OrderReturn $orderReturn)
     {
-        $this->orderReturn   = $orderReturn;
-        $this->orderReturnId = $orderReturn->id;
+        $this->orderReturn = $orderReturn;
+        // 新建（未落库）的退货单 id 为 null，直接赋给 int 会抛 TypeError
+        $this->orderReturnId = (int) ($orderReturn->id ?? 0);
     }
 
     /**

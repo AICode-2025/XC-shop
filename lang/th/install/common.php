@@ -16,7 +16,7 @@ return [
     'completed'              => 'ติดตั้งเสร็จสิ้น',
     'config'                 => 'กำหนดค่า',
     'configuration'          => 'การกำหนดค่า',
-    'congratulations'        => 'ยินดีด้วย InnoShop ได้ถูกติดตั้งเรียบร้อยแล้ว!',
+    'congratulations'        => 'ยินดีด้วย StarShop ได้ถูกติดตั้งเรียบร้อยแล้ว!',
     'current'                => 'ปัจจุบัน',
     'db_account'             => 'บัญชีฐานข้อมูล',
     'db_config'              => 'การกำหนดค่าฐานข้อมูล',

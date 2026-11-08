@@ -116,6 +116,7 @@ class MarketplaceController
             $baseUrl  = config('innoshop.api_url');
             $response = Http::baseUrl($baseUrl)
                 ->withOptions(['verify' => false])
+                ->timeout(15)
                 ->get('/api/domains/token');
 
             if ($response->successful()) {
@@ -129,7 +130,12 @@ class MarketplaceController
                 return json_success(trans('common/base.success'), ['token' => $token]);
             }
 
-            return json_fail($response->json()['message'] ?? '获取 token 失败');
+            Log::warning('Marketplace token request failed', [
+                'status' => $response->status(),
+                'body'   => mb_substr($response->body(), 0, 300),
+            ]);
+
+            return json_fail(trans('panel/plugin.token_fetch_failed'));
         } catch (\Exception $e) {
             return json_fail($e->getMessage());
         }
@@ -146,6 +152,7 @@ class MarketplaceController
             $baseUrl  = config('innoshop.api_url');
             $response = Http::baseUrl($baseUrl)
                 ->withOptions(['verify' => false])
+                ->timeout(15)
                 ->get('/api/checkout/billing_methods');
 
             if ($response->successful()) {
@@ -173,6 +180,7 @@ class MarketplaceController
             $baseUrl  = config('innoshop.api_url');
             $response = Http::baseUrl($baseUrl)
                 ->withOptions(['verify' => false])
+                ->timeout(15)
                 ->post('/api/login', $request->only('email', 'password'));
 
             return response()->json($response->json(), $response->status());
@@ -193,6 +201,7 @@ class MarketplaceController
             $baseUrl  = config('innoshop.api_url');
             $response = Http::baseUrl($baseUrl)
                 ->withOptions(['verify' => false])
+                ->timeout(15)
                 ->post('/api/register', $request->only('email', 'password', 'password_confirmation'));
 
             return response()->json($response->json(), $response->status());
@@ -218,6 +227,7 @@ class MarketplaceController
             }
             $response = Http::baseUrl($baseUrl)
                 ->withOptions(['verify' => false])
+                ->timeout(15)
                 ->withHeaders($headers)
                 ->post('/api/marketplace/domains/bind', [
                     'domain' => $request->input('domain', $request->getHost()),
@@ -243,9 +253,13 @@ class MarketplaceController
             $headers   = [];
             if ($authToken) {
                 $headers['Authorization'] = 'Bearer '.$authToken;
+            } else {
+                // 无令牌时不再请求远端，直接返回明确提示，避免把远端 422 原样抛给界面
+                return json_fail(trans('panel/plugin.auth_required'));
             }
             $response = Http::baseUrl($baseUrl)
                 ->withOptions(['verify' => false])
+                ->timeout(15)
                 ->withHeaders($headers)
                 ->get('/api/account/me');
 

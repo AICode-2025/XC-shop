@@ -9,7 +9,6 @@
 
 namespace InnoShop\Panel\Repositories;
 
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 use Spatie\Permission\Exceptions\PermissionDoesNotExist;
@@ -159,8 +158,7 @@ class RouteRepo
         try {
             return $this->adminRole->hasPermissionTo($permission);
         } catch (PermissionDoesNotExist $e) {
-            Log::error($e->getMessage());
-
+            // 权限尚未落库属正常状态（首次安装/新建角色前），不应记为错误日志
             return false;
         }
     }

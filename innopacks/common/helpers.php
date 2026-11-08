@@ -149,7 +149,7 @@ if (! function_exists('front_store_name')) {
         }
         $name = trim(strip_tags($name));
 
-        return $name !== '' ? $name : (string) config('app.name', 'InnoShop');
+        return $name !== '' ? $name : (string) config('app.name', 'StarShop');
     }
 }
 
@@ -518,14 +518,9 @@ if (! function_exists('locale_code')) {
      */
     function locale_code(): string
     {
-        $configLocale = config('app.locale');
-        if (is_admin()) {
-            $locale = current_admin()->locale ?? $configLocale;
-            if (locales()->contains('code', $locale)) {
-                return $locale;
-            } else {
-                return setting_locale_code();
-            }
+        // zwxc-custom: 后台语言与前台语言相互独立，后台不再按前台启用语言回落
+        if (is_admin() && function_exists('panel_locale_code')) {
+            return panel_locale_code();
         }
 
         return session('locale', setting_locale_code());
@@ -1487,9 +1482,9 @@ if (! function_exists('innoshop_brand_link')) {
     function innoshop_brand_link(): string
     {
         if (is_admin()) {
-            $default = '<a href="https://www.innoshop.com" class="ms-2" target="_blank">InnoShop</a>';
+            $default = '<a href="https://www.innoshop.com" class="ms-2" target="_blank">StarShop</a>';
         } else {
-            $default = 'Powered By <a href="https://www.innoshop.com" class="ms-2" target="_blank">InnoShop</a>';
+            $default = 'Powered By <a href="https://www.innoshop.com" class="ms-2" target="_blank">StarShop</a>';
         }
 
         return fire_hook_filter('innoshop.brand.link.display', $default);

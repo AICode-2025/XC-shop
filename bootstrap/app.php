@@ -31,7 +31,14 @@ return Application::configure(basePath: dirname(__DIR__))
             \Illuminate\Foundation\Http\Middleware\ValidateCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ];
-        $middleware->group('front', $webMiddlewares);
+        // zwxc-custom: 前台访客地理定位放在 SetFrontLocale 之前执行（此时 session 已启动），
+        // 使"按国家自动切换语言"在首屏生效；后台组不挂该中间件，避免污染前台语言。
+        $frontMiddlewares = $webMiddlewares;
+        if (class_exists(\App\CustomGeo\Http\Middleware\GeoDetectVisitor::class)) {
+            $frontMiddlewares[] = \App\CustomGeo\Http\Middleware\GeoDetectVisitor::class;
+        }
+
+        $middleware->group('front', $frontMiddlewares);
         $middleware->group('panel', $webMiddlewares);
 
         $apiMiddlewares = [

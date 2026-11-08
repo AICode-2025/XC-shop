@@ -5,11 +5,11 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <base href="{{ panel_route('home.index') }}">
-  <title>@yield('title'){{ View::hasSection('title') ? ' - ' : '' }}InnoShop</title>
-  <meta name="keywords" content="@yield('keywords', 'InnoShop, 创新, 开源, CMS, Laravel 11, 多语言, 多货币, Hook, 插件架构, 灵活, 强大')">
+  <title>@yield('title'){{ View::hasSection('title') ? ' - ' : '' }}StarShop</title>
+  <meta name="keywords" content="@yield('keywords', 'StarShop, 创新, 开源, CMS, Laravel 11, 多语言, 多货币, Hook, 插件架构, 灵活, 强大')">
   <meta name="generator" content="InnoShop {{ innoshop_version() }}">
   <meta name="asset" content="{{ asset('/') }}">
-  <meta name="description" content="@yield('description', 'InnoShop')">
+  <meta name="description" content="@yield('description', 'StarShop')">
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <meta name="api-token" content="{{ session('panel_api_token') }}">
   <meta name="storage-base-url" content="{{ storage_url('') }}">
@@ -30,7 +30,7 @@
   <script src="{{ asset('vendor/locale-modal/locale-modal.js') }}"></script>
   <script>
     const urls = {
-      panel_api: '{{ route('api.panel.base.index') }}',
+      panel_api: '{{ \Illuminate\Support\Facades\Route::has('api.panel.base.index') ? route('api.panel.base.index') : url('api/panel') }}',
       panel_base: '{{ panel_route('home.index') }}',
       panel_upload: '{{ panel_route('upload.images') }}',
       media_title: '{{ __("panel/menu.media") }}',

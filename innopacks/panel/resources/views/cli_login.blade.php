@@ -29,9 +29,9 @@
                 @csrf
 
                 <div class="form-floating mb-4">
-                  <input type="text" name="email" class="form-control" id="email-input" value="{{ old('email', $admin_email ?? '') }}" placeholder="{{ __('panel/login.email') }}">
-                  <label for="email-input">{{ __('panel/login.email') }}</label>
-                  @error('email')
+                  <input type="text" name="account" class="form-control" id="account-input" value="{{ old('account', old('email', $admin_email ?? '')) }}" placeholder="{{ __('panel/login.account') }}">
+                  <label for="account-input">{{ __('panel/login.account') }}</label>
+                  @error('account')
                     <div class="invalid-feedback d-block">{{ $message }}</div>
                   @enderror
                 </div>

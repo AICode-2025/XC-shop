@@ -43,6 +43,8 @@ class SettingSeeder extends BaseSeeder
             ['space' => 'system', 'name' => 'favicon', 'value' => 'images/favicon.png'],
             ['space' => 'system', 'name' => 'country_code', 'value' => 'US'],
             ['space' => 'system', 'name' => 'state_code', 'value' => 'CA'],
+            // zwxc-custom: 访客 IP 自动定位开关，默认开启（依赖 GeoLite2 数据库）
+            ['space' => 'system', 'name' => 'geo_auto_detect', 'value' => '1'],
             ['space' => 'system', 'name' => 'front_locale', 'value' => 'en'],
             ['space' => 'system', 'name' => 'expand', 'value' => '0'],
             ['space' => 'system', 'name' => 'api_docs_enabled', 'value' => '1'],
@@ -61,32 +63,32 @@ class SettingSeeder extends BaseSeeder
                 'space' => 'system',
                 'name'  => 'meta_title',
                 'value' => [
-                    'zh-cn' => 'InnoShop - 创新开源电商系统 - Laravel 11，多语言和多货币支持，基于Hook的强大插件架构电商系统',
-                    'en'    => 'InnoShop - Innovative Open Source E-commerce System - Built on Laravel 11, with multi-language and multi-currency support, a powerful e-commerce system based on a Hook-based plugin architecture.',
+                    'zh-cn' => 'StarShop - 创新开源电商系统 - Laravel 11，多语言和多货币支持，基于Hook的强大插件架构电商系统',
+                    'en'    => 'StarShop - Innovative Open Source E-commerce System - Built on Laravel 11, with multi-language and multi-currency support, a powerful e-commerce system based on a Hook-based plugin architecture.',
                 ],
             ],
             [
                 'space' => 'system',
                 'name'  => 'meta_keywords',
                 'value' => [
-                    'zh-cn' => 'InnoShop, 创新, 开源, 电子商务, Laravel 11, 多语言, 多货币, Hook, 插件架构, 灵活, 强大',
-                    'en'    => 'InnoShop, Innovation, Open Source, E-commerce, Laravel 11, Multi-language, Multi-currency, Hook, Plugin architecture, Flexible, Powerful',
+                    'zh-cn' => 'StarShop, 创新, 开源, 电子商务, Laravel 11, 多语言, 多货币, Hook, 插件架构, 灵活, 强大',
+                    'en'    => 'StarShop, Innovation, Open Source, E-commerce, Laravel 11, Multi-language, Multi-currency, Hook, Plugin architecture, Flexible, Powerful',
                 ],
             ],
             [
                 'space' => 'system',
                 'name'  => 'meta_description',
                 'value' => [
-                    'zh-cn' => 'InnoShop 是一款创新的开源电子商务平台，基于 Laravel 11 开发，具有多语言和多货币支持的特性。它采用了基于 Hook 的强大而灵活的插件架构，为用户提供了丰富的定制和扩展功能。欢迎体验 InnoShop, 打造属于您自己的电子商务平台！',
-                    'en'    => 'InnoShop is an innovative open-source e-commerce platform developed based on Laravel 11, featuring multi-language and multi-currency support. It adopts a powerful and flexible plugin architecture based on Hooks, providing users with a wealth of customization and extension capabilities. Welcome to experience InnoShop and create your own e-commerce platform!',
+                    'zh-cn' => 'StarShop 是一款创新的开源电子商务平台，基于 Laravel 11 开发，具有多语言和多货币支持的特性。它采用了基于 Hook 的强大而灵活的插件架构，为用户提供了丰富的定制和扩展功能。欢迎体验 StarShop, 打造属于您自己的电子商务平台！',
+                    'en'    => 'StarShop is an innovative open-source e-commerce platform developed based on Laravel 11, featuring multi-language and multi-currency support. It adopts a powerful and flexible plugin architecture based on Hooks, providing users with a wealth of customization and extension capabilities. Welcome to experience StarShop and create your own e-commerce platform!',
                 ],
             ],
             [
                 'space' => 'system',
                 'name'  => 'store_description',
                 'value' => [
-                    'zh-cn' => 'InnoShop 是一款创新的开源电子商务平台，基于 Laravel 11 开发，具有多语言和多货币支持的特性。它采用了基于 Hook 的强大而灵活的插件架构，为用户提供了丰富的定制和扩展功能。欢迎体验 InnoShop, 打造属于您自己的电子商务平台！',
-                    'en'    => 'InnoShop is an innovative open-source e-commerce platform developed based on Laravel 11, featuring multi-language and multi-currency support. It adopts a powerful and flexible plugin architecture based on Hooks, providing users with a wealth of customization and extension capabilities. Welcome to experience InnoShop and create your own e-commerce platform!',
+                    'zh-cn' => 'StarShop 是一款创新的开源电子商务平台，基于 Laravel 11 开发，具有多语言和多货币支持的特性。它采用了基于 Hook 的强大而灵活的插件架构，为用户提供了丰富的定制和扩展功能。欢迎体验 StarShop, 打造属于您自己的电子商务平台！',
+                    'en'    => 'StarShop is an innovative open-source e-commerce platform developed based on Laravel 11, featuring multi-language and multi-currency support. It adopts a powerful and flexible plugin architecture based on Hooks, providing users with a wealth of customization and extension capabilities. Welcome to experience StarShop and create your own e-commerce platform!',
                 ],
             ],
             [

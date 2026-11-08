@@ -116,7 +116,7 @@ class InitPluginGit extends Command
             }
 
             // 2. Set remote URL
-            $remoteUrl = "git@innoshop.work:splugins/{$pluginName}.git";
+            $remoteUrl = "https://github.com/AICode-2025/{$pluginName}.git";
             $this->info("  🔗 Setting remote URL: {$remoteUrl}");
 
             $hasOrigin = $this->hasRemoteOrigin($pluginPath);

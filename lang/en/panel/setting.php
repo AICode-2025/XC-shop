@@ -60,6 +60,8 @@ return [
     'front_default_language'              => 'Default Language',
     'front_logo'                          => 'Frontend Logo',
     'front_logo_desc'                     => 'Recommended size: 200×60px',
+    'geo_auto_detect'                     => 'Auto-detect visitor location by IP',
+    'geo_auto_detect_desc'                => 'Suggest currency and language based on the visitor IP (first visit only, never overrides manual choices). Requires a GeoLite2 database.',
     'header_menu'                         => 'Header Menu',
     'hide_url_locale'                     => 'Single language hides language code',
     'home_articles'                       => 'Home Articles',

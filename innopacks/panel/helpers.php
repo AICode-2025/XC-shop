@@ -37,6 +37,30 @@ if (! function_exists('panel_locales')) {
     }
 }
 
+if (! function_exists('panel_supported_locales')) {
+    /**
+     * zwxc-custom: 后台界面仅支持简体中文与英文，与前台语言列表相互独立。
+     *
+     * @return array
+     */
+    function panel_supported_locales(): array
+    {
+        return ['zh-cn', 'en'];
+    }
+}
+
+if (! function_exists('panel_default_locale')) {
+    /**
+     * zwxc-custom: 后台默认语言（不再跟随前台默认语言）。
+     *
+     * @return string
+     */
+    function panel_default_locale(): string
+    {
+        return 'zh-cn';
+    }
+}
+
 if (! function_exists('panel_locale_code')) {
     /**
      * Get panel locale code
@@ -46,7 +70,10 @@ if (! function_exists('panel_locale_code')) {
      */
     function panel_locale_code(): string
     {
-        return current_admin()->locale ?? panel_session_locale();
+        $code  = current_admin()?->locale ?: panel_session_locale();
+        $codes = panel_lang_path_codes();
+
+        return in_array($code, $codes, true) ? $code : panel_default_locale();
     }
 }
 
@@ -59,7 +86,7 @@ if (! function_exists('panel_session_locale')) {
      */
     function panel_session_locale(): string
     {
-        return session('panel_locale', setting_locale_code());
+        return session('panel_locale', panel_default_locale());
     }
 }
 
@@ -102,8 +129,8 @@ if (! function_exists('panel_lang_path_codes')) {
     {
         $packages = language_codes();
 
-        $panelLangCodes = collect($packages)->filter(function ($code) {
-            return file_exists(lang_path("{$code}/panel"));
+        $panelLangCodes = collect(panel_supported_locales())->filter(function ($code) use ($packages) {
+            return in_array($code, $packages, true) && file_exists(lang_path("{$code}/panel"));
         })->toArray();
 
         return array_values($panelLangCodes);

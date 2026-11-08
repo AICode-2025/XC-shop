@@ -97,10 +97,12 @@
                     </div>
                     @if($showCopyAction)
                     <div>
-                      <a href="{{ route($routePrefix . '.products.copy', [$product->id]) }}">
-                        <el-button size="small" plain type="warning">{{
+                      <form action="{{ route($routePrefix . '.products.copy', [$product->id]) }}" method="POST"
+                            class="d-inline">
+                        @csrf
+                        <el-button size="small" plain type="warning" native-type="submit">{{
                         __('common/base.copy')}}</el-button>
-                      </a>
+                      </form>
                     </div>
                     @endif
                     <div>

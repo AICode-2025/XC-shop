@@ -16,7 +16,7 @@ return [
     'completed'              => 'Instalasi Selesai',
     'config'                 => 'Konfigurasi',
     'configuration'          => 'Pengaturan Parameter',
-    'congratulations'        => 'Selamat, InnoShop berhasil diinstal!',
+    'congratulations'        => 'Selamat, StarShop berhasil diinstal!',
     'current'                => 'Saat Ini',
     'db_account'             => 'Akun Database',
     'db_config'              => 'Konfigurasi Database',

@@ -27,13 +27,18 @@ class AuthController extends BaseController
      */
     #[Endpoint('Admin login')]
     #[Unauthenticated]
-    #[BodyParam('email', 'string', required: true, example: 'admin@example.com')]
+    #[BodyParam('account', 'string', required: false, description: 'Email or username', example: 'admin@example.com')]
+    #[BodyParam('email', 'string', required: false, example: 'admin@example.com')]
     #[BodyParam('password', 'string', required: true, example: 'password')]
     public function login(Request $request): mixed
     {
         try {
-            if (! Auth::guard('admin')->attempt($request->only(['email', 'password']))) {
-                throw ValidationException::withMessages(['email' => ['The provided credentials are incorrect.']]);
+            $account     = trim((string) ($request->input('account') ?: $request->input('email', '')));
+            $field       = filter_var($account, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+            $credentials = [$field => $account, 'password' => (string) $request->input('password', '')];
+
+            if (! Auth::guard('admin')->attempt($credentials)) {
+                throw ValidationException::withMessages(['account' => ['The provided credentials are incorrect.']]);
             }
             $admin = Auth::guard('admin')->user();
             if (! $admin instanceof Admin) {

@@ -4,11 +4,11 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <base href="{{ panel_route('home.index') }}">
-  <title>{{ $plugin->getLocaleName() }} - InnoShop</title>
-  <meta name="keywords" content="@yield('keywords', 'InnoShop, Innovative, Open Source, Laravel, Multi-language, Multi-currency, Hook, Plugin Architecture, Flexible, Powerful')">
+  <title>{{ $plugin->getLocaleName() }} - StarShop</title>
+  <meta name="keywords" content="@yield('keywords', 'StarShop, Innovative, Open Source, Laravel, Multi-language, Multi-currency, Hook, Plugin Architecture, Flexible, Powerful')">
   <meta name="generator" content="InnoShop {{ innoshop_version() }}">
   <meta name="asset" content="{{ asset('/') }}">
-  <meta name="description" content="@yield('description', 'InnoShop')">
+  <meta name="description" content="@yield('description', 'StarShop')">
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <meta name="api-token" content="{{ session('panel_api_token') }}">
   <link rel="shortcut icon" href="{{ image_origin(system_setting('favicon', 'images/favicon.png')) }}">

@@ -16,7 +16,7 @@ return [
     'completed'              => '安裝完成',
     'config'                 => '配置',
     'configuration'          => '參數配置',
-    'congratulations'        => '恭喜您，InnoShop 安裝成功！',
+    'congratulations'        => '恭喜您，StarShop 安裝成功！',
     'current'                => '當前',
     'db_account'             => '數據庫賬號',
     'db_config'              => '數據庫配置',

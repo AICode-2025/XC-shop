@@ -319,7 +319,8 @@ class ImageService
         create_directories(dirname($outputPath));
 
         $manager = new ImageManager(new Driver);
-        $image   = $manager->decode($this->imagePath);
+        // decode() 只接受二进制内容，传文件路径会被当成图片数据解码而失败
+        $image = $manager->decodePath($this->imagePath);
 
         $this->applyResizeMode($image, $mode, $width, $height, $originalWidth, $originalHeight);
 

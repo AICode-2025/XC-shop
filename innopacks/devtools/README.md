@@ -376,7 +376,7 @@ php artisan dev:set-gitea-token --clear
 
 **功能：**
 1. 初始化 Git 仓库（如果不存在）
-2. 设置远程仓库地址：`git@innoshop.work:splugins/{plugin}.git`
+2. 设置远程仓库地址：`https://github.com/AICode-2025/{plugin}.git`
 3. 通过 API 创建远程仓库（如果提供了 token 或已保存 token）
 4. 添加所有文件并创建初始提交
 5. 推送到远程仓库的 `main` 分支
@@ -482,7 +482,7 @@ php artisan dev:publish-theme themes/modern_shop
 
 **功能：**
 1. 初始化 Git 仓库（如果不存在）
-2. 设置远程仓库地址：`git@innoshop.work:splugins/{plugin}.git`
+2. 设置远程仓库地址：`https://github.com/AICode-2025/{plugin}.git`
 3. 通过 API 创建远程仓库（如果提供了 token）
 4. 添加所有文件并创建初始提交
 5. 推送到远程仓库的 `main` 分支

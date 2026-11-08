@@ -16,7 +16,7 @@ return [
     'completed'              => 'Cài đặt hoàn tất',
     'config'                 => 'Cấu hình',
     'configuration'          => 'Cấu hình tham số',
-    'congratulations'        => 'Xin chúc mừng, InnoShop đã được cài đặt thành công!',
+    'congratulations'        => 'Xin chúc mừng, StarShop đã được cài đặt thành công!',
     'current'                => 'Hiện tại',
     'db_account'             => 'Tài khoản cơ sở dữ liệu',
     'db_config'              => 'Cấu hình cơ sở dữ liệu',

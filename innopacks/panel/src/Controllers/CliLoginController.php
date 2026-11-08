@@ -55,16 +55,16 @@ class CliLoginController extends BaseController
     {
         $callback = session('cli_login_callback', '');
 
-        if (! Auth::guard('admin')->attempt($request->validated())) {
+        if (! Auth::guard('admin')->attempt($request->credentials())) {
             throw ValidationException::withMessages([
-                'email' => [trans('auth.failed')],
+                'account' => [trans('auth.failed')],
             ]);
         }
 
         $admin = Auth::guard('admin')->user();
         if (! $admin instanceof Admin) {
             throw ValidationException::withMessages([
-                'email' => [trans('auth.failed')],
+                'account' => [trans('auth.failed')],
             ]);
         }
 

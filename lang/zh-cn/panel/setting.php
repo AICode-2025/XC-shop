@@ -62,6 +62,8 @@ return [
     'front_default_language'              => '前台默认语言',
     'front_logo'                          => '前台 Logo',
     'front_logo_desc'                     => '建议尺寸：200×60px',
+    'geo_auto_detect'                     => '访客 IP 自动定位',
+    'geo_auto_detect_desc'                => '开启后按访客 IP 推荐币种与语言（仅首次访问生效，不覆盖用户手动选择）；需要先安装 GeoLite2 数据库。',
     'header_menu'                         => '页头导航',
     'hide_url_locale'                     => '单语言隐藏语言代码',
     'hide_url_locale_desc'                => '开启后，单语言时URL将不显示语言代码。例如：/en/products 将变为 /products',

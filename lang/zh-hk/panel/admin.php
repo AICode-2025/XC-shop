@@ -15,4 +15,5 @@ return [
     'password'        => '密碼',
     'roles'           => '角色',
     'system_language' => '系統語言',
+    'username'        => '用戶名',
 ];

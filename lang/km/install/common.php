@@ -16,7 +16,7 @@ return [
     'completed'              => 'Completed',
     'config'                 => 'Configuration',
     'configuration'          => 'Configuration',
-    'congratulations'        => 'Congratulations, the installation of InnoShop is successful!',
+    'congratulations'        => 'Congratulations, the installation of StarShop is successful!',
     'current'                => 'Current',
     'db_account'             => 'Database Account',
     'db_config'              => 'Database Configuration',

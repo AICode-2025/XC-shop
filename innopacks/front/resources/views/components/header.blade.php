@@ -85,7 +85,7 @@
               <img src="{{ image_origin($frontLogo) }}" class="img-fluid" alt="{{ front_store_name() }}">
             @else
               <span class="d-inline-flex align-items-center" style="width:36px;height:36px;color:rgb(139,82,224);flex-shrink:0;">@include('components.logo-icon')</span>
-              <span class="fw-bold" style="font-size:20px;color:#222;">InnoShop</span>
+              <span class="fw-bold" style="font-size:20px;color:#222;">StarShop</span>
             @endif
           </a>
         </h1>
@@ -187,7 +187,7 @@
           <img src="{{ image_origin($frontLogo) }}" class="img-fluid" alt="{{ front_store_name() }}">
         @else
           <span class="d-inline-flex align-items-center" style="width:28px;height:28px;color:rgb(139,82,224);flex-shrink:0;">@include('components.logo-icon')</span>
-          <span class="fw-bold" style="font-size:16px;color:#222;">InnoShop</span>
+          <span class="fw-bold" style="font-size:16px;color:#222;">StarShop</span>
         @endif
       </a>
     </div>

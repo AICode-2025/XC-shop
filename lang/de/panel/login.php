@@ -8,10 +8,10 @@
  */
 
 return [
-    'description' => 'InnoShop, innovativ quelloffenes E-Commerce-System',
+    'description' => 'StarShop, innovativ quelloffenes E-Commerce-System',
     'email'       => 'E-Mail',
-    'keywords'    => 'InnoShop, innovativ, quelloffene, E-Commerce, Laravel, mehrsprachig, mehrwährung, Hook, Plugin-Architektur, flexibel, leistungsfähig',
-    'login_index' => 'InnoShop Backend Login',
+    'keywords'    => 'StarShop, innovativ, quelloffene, E-Commerce, Laravel, mehrsprachig, mehrwährung, Hook, Plugin-Architektur, flexibel, leistungsfähig',
+    'login_index' => 'StarShop Backend Login',
     'password'    => 'Passwort',
-    'title'       => 'InnoShop Backend Management',
+    'title'       => 'StarShop Backend Management',
 ];

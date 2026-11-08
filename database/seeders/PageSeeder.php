@@ -90,7 +90,7 @@ class PageSeeder extends Seeder
             <div class="d-inline-flex align-items-center justify-content-center rounded-circle mb-3" style="width:80px;height:80px;background:rgba(233,30,99,.08);">
               <i class="bi bi-github" style="font-size:36px;color:#E91E63;"></i>
             </div>
-            <h5 class="fw-bold mb-2">InnoShop 社区版</h5>
+            <h5 class="fw-bold mb-2">StarShop 社区版</h5>
             <p class="text-secondary mb-0">开源免费的电商系统，Laravel 12 框架，模块化架构，支持多语言、多货币、插件市场和主题系统。</p>
           </div>
         </div>
@@ -99,7 +99,7 @@ class PageSeeder extends Seeder
             <div class="d-inline-flex align-items-center justify-content-center rounded-circle mb-3" style="width:80px;height:80px;background:rgba(233,30,99,.08);">
               <i class="bi bi-building" style="font-size:36px;color:#E91E63;"></i>
             </div>
-            <h5 class="fw-bold mb-2">InnoShop 工厂版</h5>
+            <h5 class="fw-bold mb-2">StarShop 工厂版</h5>
             <p class="text-secondary mb-0">专为制造业打造，支持批量报价、生产订单跟踪、供应链管理和经销商分级体系。</p>
           </div>
         </div>
@@ -108,7 +108,7 @@ class PageSeeder extends Seeder
             <div class="d-inline-flex align-items-center justify-content-center rounded-circle mb-3" style="width:80px;height:80px;background:rgba(233,30,99,.08);">
               <i class="bi bi-briefcase-fill" style="font-size:36px;color:#E91E63;"></i>
             </div>
-            <h5 class="fw-bold mb-2">InnoShop 企业版</h5>
+            <h5 class="fw-bold mb-2">StarShop 企业版</h5>
             <p class="text-secondary mb-0">面向中大型企业，高级数据分析、AI 智能推荐、API 集成、专属客户经理与优先技术支持。</p>
           </div>
         </div>
@@ -119,7 +119,7 @@ class PageSeeder extends Seeder
             <div class="d-inline-flex align-items-center justify-content-center rounded-circle mb-3" style="width:80px;height:80px;background:rgba(233,30,99,.08);">
               <i class="bi bi-people-fill" style="font-size:36px;color:#E91E63;"></i>
             </div>
-            <h5 class="fw-bold mb-2">InnoShop 多商家</h5>
+            <h5 class="fw-bold mb-2">StarShop 多商家</h5>
             <p class="text-secondary mb-0">多商户入驻平台，商家独立管理店铺，统一收款、自动分账、商户审核与佣金管理。</p>
           </div>
         </div>
@@ -128,7 +128,7 @@ class PageSeeder extends Seeder
             <div class="d-inline-flex align-items-center justify-content-center rounded-circle mb-3" style="width:80px;height:80px;background:rgba(233,30,99,.08);">
               <i class="bi bi-truck" style="font-size:36px;color:#E91E63;"></i>
             </div>
-            <h5 class="fw-bold mb-2">InnoShop 供应商</h5>
+            <h5 class="fw-bold mb-2">StarShop 供应商</h5>
             <p class="text-secondary mb-0">供应商管理平台，入驻、商品托管、采购订单管理与库存同步，打通上下游供应链。</p>
           </div>
         </div>
@@ -137,7 +137,7 @@ class PageSeeder extends Seeder
             <div class="d-inline-flex align-items-center justify-content-center rounded-circle mb-3" style="width:80px;height:80px;background:rgba(233,30,99,.08);">
               <i class="bi bi-phone-fill" style="font-size:36px;color:#E91E63;"></i>
             </div>
-            <h5 class="fw-bold mb-2">InnoShop App</h5>
+            <h5 class="fw-bold mb-2">StarShop App</h5>
             <p class="text-secondary mb-0">原生 iOS/Android 应用，个性化推送、增强搜索、流畅购物体验与社交分享。</p>
           </div>
         </div>
@@ -286,7 +286,7 @@ class PageSeeder extends Seeder
             <div class="d-inline-flex align-items-center justify-content-center rounded-circle mb-3" style="width:80px;height:80px;background:rgba(233,30,99,.08);">
               <i class="bi bi-github" style="font-size:36px;color:#E91E63;"></i>
             </div>
-            <h5 class="fw-bold mb-2">InnoShop Community</h5>
+            <h5 class="fw-bold mb-2">StarShop Community</h5>
             <p class="text-secondary mb-0">Open-source and free, built on Laravel 12 with modular architecture. Multi-language, multi-currency, plugin marketplace and theme system.</p>
           </div>
         </div>
@@ -295,7 +295,7 @@ class PageSeeder extends Seeder
             <div class="d-inline-flex align-items-center justify-content-center rounded-circle mb-3" style="width:80px;height:80px;background:rgba(233,30,99,.08);">
               <i class="bi bi-building" style="font-size:36px;color:#E91E63;"></i>
             </div>
-            <h5 class="fw-bold mb-2">InnoShop Factory</h5>
+            <h5 class="fw-bold mb-2">StarShop Factory</h5>
             <p class="text-secondary mb-0">Tailored for manufacturing with bulk quoting, production order tracking, supply chain management, and dealer tier systems.</p>
           </div>
         </div>
@@ -304,7 +304,7 @@ class PageSeeder extends Seeder
             <div class="d-inline-flex align-items-center justify-content-center rounded-circle mb-3" style="width:80px;height:80px;background:rgba(233,30,99,.08);">
               <i class="bi bi-briefcase-fill" style="font-size:36px;color:#E91E63;"></i>
             </div>
-            <h5 class="fw-bold mb-2">InnoShop Enterprise</h5>
+            <h5 class="fw-bold mb-2">StarShop Enterprise</h5>
             <p class="text-secondary mb-0">Advanced analytics, AI recommendations, deep API integration, dedicated account managers, and priority support.</p>
           </div>
         </div>
@@ -315,7 +315,7 @@ class PageSeeder extends Seeder
             <div class="d-inline-flex align-items-center justify-content-center rounded-circle mb-3" style="width:80px;height:80px;background:rgba(233,30,99,.08);">
               <i class="bi bi-people-fill" style="font-size:36px;color:#E91E63;"></i>
             </div>
-            <h5 class="fw-bold mb-2">InnoShop Multi-Vendor</h5>
+            <h5 class="fw-bold mb-2">StarShop Multi-Vendor</h5>
             <p class="text-secondary mb-0">Multi-merchant marketplace with vendor-managed stores, unified payments, automated settlement, and commission management.</p>
           </div>
         </div>
@@ -324,7 +324,7 @@ class PageSeeder extends Seeder
             <div class="d-inline-flex align-items-center justify-content-center rounded-circle mb-3" style="width:80px;height:80px;background:rgba(233,30,99,.08);">
               <i class="bi bi-truck" style="font-size:36px;color:#E91E63;"></i>
             </div>
-            <h5 class="fw-bold mb-2">InnoShop Supplier</h5>
+            <h5 class="fw-bold mb-2">StarShop Supplier</h5>
             <p class="text-secondary mb-0">Supplier management with vendor onboarding, product consignment, purchase orders, and inventory sync for streamlined supply chain.</p>
           </div>
         </div>
@@ -333,7 +333,7 @@ class PageSeeder extends Seeder
             <div class="d-inline-flex align-items-center justify-content-center rounded-circle mb-3" style="width:80px;height:80px;background:rgba(233,30,99,.08);">
               <i class="bi bi-phone-fill" style="font-size:36px;color:#E91E63;"></i>
             </div>
-            <h5 class="fw-bold mb-2">InnoShop App</h5>
+            <h5 class="fw-bold mb-2">StarShop App</h5>
             <p class="text-secondary mb-0">Native iOS and Android app with push notifications, enhanced search, smooth shopping experience, and social sharing.</p>
           </div>
         </div>
@@ -468,7 +468,7 @@ class PageSeeder extends Seeder
                 'page_id' => 4,
                 'locale'  => 'zh-cn',
                 'title'   => '隐私政策',
-                'content' => '<p>InnoShop 非常重视用户的隐私保护。本隐私政策说明了我们如何收集、使用和保护您的个人信息。</p>
+                'content' => '<p>StarShop 非常重视用户的隐私保护。本隐私政策说明了我们如何收集、使用和保护您的个人信息。</p>
 
 <h3>1. 信息收集</h3>
 <p>我们收集的信息包括：</p>
@@ -514,15 +514,15 @@ class PageSeeder extends Seeder
 <h3>6. 联系我们</h3>
 <p>如果您有任何关于隐私政策的疑问，请联系我们：</p>
 <p>邮箱：privacy@innoshop.com</p>',
-                'meta_title'       => '隐私政策 - InnoShop',
-                'meta_description' => 'InnoShop 隐私政策说明',
+                'meta_title'       => '隐私政策 - StarShop',
+                'meta_description' => 'StarShop 隐私政策说明',
                 'meta_keywords'    => '隐私政策,数据保护,个人信息',
             ],
             [
                 'page_id' => 4,
                 'locale'  => 'en',
                 'title'   => 'Privacy Policy',
-                'content' => '<p>InnoShop takes your privacy seriously. This Privacy Policy explains how we collect, use, and protect your personal information.</p>
+                'content' => '<p>StarShop takes your privacy seriously. This Privacy Policy explains how we collect, use, and protect your personal information.</p>
 
 <h3>1. Information Collection</h3>
 <p>We collect the following information:</p>
@@ -568,8 +568,8 @@ class PageSeeder extends Seeder
 <h3>6. Contact Us</h3>
 <p>If you have any questions about our Privacy Policy, please contact us:</p>
 <p>Email: privacy@innoshop.com</p>',
-                'meta_title'       => 'Privacy Policy - InnoShop',
-                'meta_description' => 'InnoShop Privacy Policy',
+                'meta_title'       => 'Privacy Policy - StarShop',
+                'meta_description' => 'StarShop Privacy Policy',
                 'meta_keywords'    => 'Privacy Policy, Data Protection, Personal Information',
             ],
         ];

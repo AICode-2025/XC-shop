@@ -16,7 +16,7 @@ return [
     'completed'              => 'Installatie voltooid',
     'config'                 => 'Configuratie',
     'configuration'          => 'Parameterconfiguratie',
-    'congratulations'        => 'Gefeliciteerd, InnoShop installatie geslaagd!',
+    'congratulations'        => 'Gefeliciteerd, StarShop installatie geslaagd!',
     'current'                => 'Huidig',
     'db_account'             => 'Database account',
     'db_config'              => 'Database configuratie',

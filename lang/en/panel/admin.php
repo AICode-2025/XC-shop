@@ -15,4 +15,5 @@ return [
     'password'        => 'Password',
     'roles'           => 'Roles',
     'system_language' => 'System language',
+    'username'        => 'Username',
 ];

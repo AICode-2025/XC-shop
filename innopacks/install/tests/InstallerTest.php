@@ -81,7 +81,7 @@ class InstallerTest extends TestCase
         $this->sqliteDatabase     = $this->createMock(SQLiteDatabase::class);
         $this->environmentChecker = $this->createMock(EnvironmentChecker::class);
 
-        $this->installer = new TestInstaller('/tmp/test');
+        $this->installer = new TestInstaller($this->tempInstallPath());
         $this->installer->setDatabases($this->mysqlDatabase, $this->sqliteDatabase);
         $this->installer->setEnvironmentChecker($this->environmentChecker);
     }
@@ -171,17 +171,12 @@ class InstallerTest extends TestCase
     public function test_can_check_installation_status(): void
     {
         // Create test directories
-        $testBasePath    = '/tmp/test';
+        $testBasePath    = $this->tempInstallPath();
         $testStoragePath = $testBasePath.'/storage';
         $testEnvPath     = $testBasePath.'/.env';
 
-        // Ensure directories don't exist
-        if (file_exists($testStoragePath)) {
-            system("rm -rf {$testStoragePath}");
-        }
-        if (file_exists($testEnvPath)) {
-            unlink($testEnvPath);
-        }
+        // Ensure directories don't exist（用 PHP 递归删除，避免依赖 Unix rm）
+        $this->removeDirectory($testBasePath);
 
         // Check uninstalled state
         $this->assertFalse($this->installer->isInstalled());
@@ -195,6 +190,35 @@ class InstallerTest extends TestCase
         $this->assertTrue($this->installer->isInstalled());
 
         // Cleanup
-        system("rm -rf {$testBasePath}");
+        $this->removeDirectory($testBasePath);
+    }
+
+    /**
+     * 跨平台临时目录，避免硬编码 /tmp 在 Windows 上留下脏数据。
+     */
+    private function tempInstallPath(): string
+    {
+        return rtrim(sys_get_temp_dir(), '/\\').DIRECTORY_SEPARATOR.'innoshop-install-test';
+    }
+
+    /**
+     * 递归删除目录（跨平台，不依赖外部命令）。
+     */
+    private function removeDirectory(string $path): void
+    {
+        if (! is_dir($path)) {
+            return;
+        }
+
+        $items = new \RecursiveIteratorIterator(
+            new \RecursiveDirectoryIterator($path, \FilesystemIterator::SKIP_DOTS),
+            \RecursiveIteratorIterator::CHILD_FIRST
+        );
+
+        foreach ($items as $item) {
+            $item->isDir() ? rmdir($item->getPathname()) : unlink($item->getPathname());
+        }
+
+        rmdir($path);
     }
 }

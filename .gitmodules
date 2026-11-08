@@ -1,3 +1,3 @@
-[submodule "plugins/PartnerLink"]
-	path = plugins/PartnerLink
-	url = git@innoshop.work:splugins/PartnerLink.git
+# 上游遗留的私有子模块声明已清理：plugins/PartnerLink 无 gitlink、目录不存在。
+# 插件仓库模板统一见 innopacks/devtools/src/Console/Commands/InitPluginGit.php
+# 本项目仓库：https://github.com/AICode-2025/XC-shop

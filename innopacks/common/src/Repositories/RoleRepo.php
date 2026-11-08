@@ -78,7 +78,8 @@ class RoleRepo
         $items = [];
         foreach ($permissions as $permission) {
             $code = $permission;
-            Permission::findOrCreate($code);
+            // 角色使用 admin 守卫，权限必须同守卫创建，否则 syncPermissions 抛 GuardDoesNotMatch
+            Permission::findOrCreate($code, 'admin');
             $items[] = $code;
         }
 

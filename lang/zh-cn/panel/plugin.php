@@ -149,4 +149,7 @@ return [
     'seed_clear_data_hint'          => '勾选后将清空该插件所有数据后再重新导入，请谨慎操作。',
     'seed_btn_cancel'               => '取消',
     'seed_btn_confirm'              => '确认导入',
+
+    'token_fetch_failed' => '获取 Token 失败：市场接口暂不可用，请稍后重试或手动填写 Token',
+    'auth_required'      => '尚未登录市场账号，请先登录或手动填写授权 Token',
 ];

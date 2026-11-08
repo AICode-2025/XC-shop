@@ -8,10 +8,10 @@
  */
 
 return [
-    'description' => 'InnoShop, sistema de e-commerce inovador e de código aberto',
+    'description' => 'StarShop, sistema de e-commerce inovador e de código aberto',
     'email'       => 'E-mail',
-    'keywords'    => 'InnoShop, inovador, código aberto, e-commerce, Laravel, multilíngue, multi-moeda, Hook, arquitetura de plugins, flexível, poderoso',
-    'login_index' => 'Login do painel InnoShop',
+    'keywords'    => 'StarShop, inovador, código aberto, e-commerce, Laravel, multilíngue, multi-moeda, Hook, arquitetura de plugins, flexível, poderoso',
+    'login_index' => 'Login do painel StarShop',
     'password'    => 'Senha',
-    'title'       => 'Administração do painel InnoShop',
+    'title'       => 'Administração do painel StarShop',
 ];

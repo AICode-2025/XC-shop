@@ -45,7 +45,8 @@ class LoginController extends BaseController
     public function store(LoginRequest $request): mixed
     {
         $redirectUri = session('panel_redirect_uri');
-        if (auth('admin')->attempt($request->validated())) {
+
+        if (auth('admin')->attempt($request->credentials())) {
             if ($redirectUri) {
                 session()->forget('panel_redirect_uri');
 

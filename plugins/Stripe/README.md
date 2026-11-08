@@ -322,7 +322,7 @@ For support and assistance:
 - **Documentation**: [InnoShop Docs](https://docs.innoshop.com)
 - **Community**: [InnoShop Forum](https://forum.innoshop.com)
 - **Email**: [team@innoshop.com](mailto:team@innoshop.com)
-- **GitHub**: [InnoShop GitHub](https://github.com/innoshop)
+- **GitHub**: [InnoShop GitHub](https://github.com/AICode-2025/XC-shop)
 
 ## 贡献
 

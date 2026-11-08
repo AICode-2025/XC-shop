@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <title>@yield('title', system_setting_locale('meta_title', 'InnoShop DebugBar'))</title>
+  <title>@yield('title', system_setting_locale('meta_title', 'StarShop DebugBar'))</title>
 </head>
 
 <body>

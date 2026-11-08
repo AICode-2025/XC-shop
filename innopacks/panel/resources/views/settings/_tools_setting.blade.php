@@ -36,6 +36,15 @@
             <p class="text-muted small mb-0">{{ __('panel/setting_geolite2.geolite2_setting_desc') }}</p>
           </div>
           <div class="card-body">
+            {{-- zwxc-custom: 前台访客自动定位开关（关闭后不再按 IP 推荐币种/语言） --}}
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <x-common-form-switch-radio title="{{ __('panel/setting.geo_auto_detect') }}"
+                                            name="geo_auto_detect" required
+                                            value="{{ old('geo_auto_detect', system_setting('geo_auto_detect', '1')) }}"/>
+                <div class="text-secondary"><small>{{ __('panel/setting.geo_auto_detect_desc') }}</small></div>
+              </div>
+            </div>
             <!-- Database Info -->
             <div class="row mb-3">
               <div class="col-md-12">

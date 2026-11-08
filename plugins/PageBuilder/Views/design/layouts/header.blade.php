@@ -2,7 +2,7 @@
   <div class="container-fluid">
     <div class="d-flex align-items-center">
       <a href="{{ panel_route('pbuilder.index') }}" class="btn btn-link text-muted p-0 me-3 d-flex align-items-center text-decoration-none">
-        <img src="{{ image_origin(system_setting('logo', 'images/logo.png')) }}" alt="InnoShop" height="28" class="me-2">
+        <img src="{{ image_origin(system_setting('logo', 'images/logo.png')) }}" alt="StarShop" height="28" class="me-2">
         <span class="fw-bold text-primary" style="font-size: 14px;">{{ $plugin->getLocaleName() }}</span>
       </a>
       

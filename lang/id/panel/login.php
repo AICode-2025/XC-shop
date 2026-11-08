@@ -8,10 +8,10 @@
  */
 
 return [
-    'description' => 'InnoShop, sistem e-commerce open source yang inovatif',
+    'description' => 'StarShop, sistem e-commerce open source yang inovatif',
     'email'       => 'Surel',
-    'keywords'    => 'InnoShop, inovasi, open source, e-commerce, Laravel, multibahasa, multi mata uang, Hook, arsitektur plugin, fleksibel, kuat',
-    'login_index' => 'Login Backend InnoShop',
+    'keywords'    => 'StarShop, inovasi, open source, e-commerce, Laravel, multibahasa, multi mata uang, Hook, arsitektur plugin, fleksibel, kuat',
+    'login_index' => 'Login Backend StarShop',
     'password'    => 'Kata Sandi',
-    'title'       => 'Backend Management InnoShop',
+    'title'       => 'Backend Management StarShop',
 ];

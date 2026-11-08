@@ -16,7 +16,7 @@ return [
     'completed'              => 'Tamamlandı',
     'config'                 => 'Yapılandırma',
     'configuration'          => 'Yapılandırma',
-    'congratulations'        => 'Tebrikler, InnoShop başarıyla kuruldu!',
+    'congratulations'        => 'Tebrikler, StarShop başarıyla kuruldu!',
     'current'                => 'Mevcut',
     'db_account'             => 'Veritabanı Hesabı',
     'db_config'              => 'Veritabanı Yapılandırması',

@@ -16,7 +16,7 @@ return [
     'completed'              => 'Pemasangan Selesai',
     'config'                 => 'Konfigurasi',
     'configuration'          => 'Konfigurasi Parameter',
-    'congratulations'        => 'Tahniah, InnoShop berjaya dipasang!',
+    'congratulations'        => 'Tahniah, StarShop berjaya dipasang!',
     'current'                => 'Semasa',
     'db_account'             => 'Akaun Pangkalan Data',
     'db_config'              => 'Konfigurasi Pangkalan Data',

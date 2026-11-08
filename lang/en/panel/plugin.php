@@ -148,4 +148,7 @@ return [
     'seed_clear_data_hint'          => 'If checked, all existing plugin data will be cleared before re-importing. Proceed with caution.',
     'seed_btn_cancel'               => 'Cancel',
     'seed_btn_confirm'              => 'Confirm Import',
+
+    'token_fetch_failed' => 'Failed to fetch the token: the marketplace API is unavailable. Please retry later or enter a token manually.',
+    'auth_required'      => 'You are not signed in to the marketplace. Please sign in first or enter an authorization token manually.',
 ];

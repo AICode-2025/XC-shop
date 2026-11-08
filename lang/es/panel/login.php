@@ -8,10 +8,10 @@
  */
 
 return [
-    'title'       => 'Panel de administración de InnoShop',
-    'keywords'    => 'InnoShop, Innovación, Código abierto, Comercio electrónico, Laravel, Multilingüe, Multi-moneda, Gancho, Arquitectura de complementos, Flexible, Poderoso',
-    'description' => 'InnoShop - Un sistema de comercio electrónico de código abierto innovador',
-    'login_index' => 'Iniciar sesión en el panel de administración de InnoShop',
+    'title'       => 'Panel de administración de StarShop',
+    'keywords'    => 'StarShop, Innovación, Código abierto, Comercio electrónico, Laravel, Multilingüe, Multi-moneda, Gancho, Arquitectura de complementos, Flexible, Poderoso',
+    'description' => 'StarShop - Un sistema de comercio electrónico de código abierto innovador',
+    'login_index' => 'Iniciar sesión en el panel de administración de StarShop',
     'email'       => 'Correo electrónico',
     'password'    => 'Contraseña',
 ];

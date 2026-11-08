@@ -22,7 +22,7 @@ class Admin extends AuthUser
     use HasApiTokens, HasFactory, HasRoles, Notifiable;
 
     protected $fillable = [
-        'name', 'email', 'password', 'locale', 'active',
+        'name', 'username', 'email', 'password', 'locale', 'active',
     ];
 
     protected $hidden = [

@@ -16,7 +16,7 @@ return [
     'completed'              => '설치 완료',
     'config'                 => '설정',
     'configuration'          => '설정값',
-    'congratulations'        => 'InnoShop을 성공적으로 설치하셨습니다! 축하합니다!',
+    'congratulations'        => 'StarShop을 성공적으로 설치하셨습니다! 축하합니다!',
     'current'                => '현재',
     'db_account'             => '데이터베이스 계정',
     'db_config'              => '데이터베이스 설정',

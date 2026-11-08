@@ -18,6 +18,8 @@
 
         <x-common-form-input title="{{ __('panel/admin.name') }}" name="name" value="{{ old('name', $admin->name) }}" required />
 
+        <x-common-form-input title="{{ __('panel/admin.username') }}" name="username" value="{{ old('username', $admin->username) }}" />
+
         <x-common-form-input title="{{ __('panel/admin.password') }}" name="password" value="{{ old('email') }}" />
 
         <x-common-form-input title="{{ __('panel/admin.email') }}" name="email" value="{{ old('email', $admin->email) }}" required/>

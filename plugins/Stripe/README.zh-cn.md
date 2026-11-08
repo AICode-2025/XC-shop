@@ -317,7 +317,7 @@ Webhooks对于处理以下事件至关重要：
 - **文档**：[InnoShop文档](https://docs.innoshop.com)
 - **社区**：[InnoShop论坛](https://forum.innoshop.com)
 - **邮箱**：[team@innoshop.com](mailto:team@innoshop.com)
-- **GitHub**：[InnoShop GitHub](https://github.com/innoshop)
+- **GitHub**：[InnoShop GitHub](https://github.com/AICode-2025/XC-shop)
 
 ## 贡献
 

@@ -16,7 +16,7 @@ return [
     'completed'              => 'اكتمل التثبيت',
     'config'                 => 'التكوين',
     'configuration'          => 'إعدادات المعلمات',
-    'congratulations'        => 'تهانينا، تم تثبيت InnoShop بنجاح!',
+    'congratulations'        => 'تهانينا، تم تثبيت StarShop بنجاح!',
     'current'                => 'الحالي',
     'db_account'             => 'حساب قاعدة البيانات',
     'db_config'              => 'تكوين قاعدة البيانات',

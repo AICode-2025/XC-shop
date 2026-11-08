@@ -25,21 +25,8 @@ class SetPanelLocale
      */
     public function handle(Request $request, Closure $next): mixed
     {
-        $frontLocales = locales();
-        $frontLocale  = front_locale_code();
-
-        $panelLocales  = panel_locales();
-        $currentLocale = panel_locale_code();
-
-        if (collect($panelLocales)->contains('code', $currentLocale)) {
-            if (! $frontLocales->contains('code', $currentLocale)) {
-                session(['locale' => $frontLocale]);
-            }
-            app()->setLocale($currentLocale);
-        } else {
-            session(['locale' => $frontLocale]);
-            app()->setLocale($frontLocale);
-        }
+        // zwxc-custom: 后台语言与前台语言完全独立，不再读写前台的 session('locale')
+        app()->setLocale(panel_locale_code());
 
         return $next($request);
     }

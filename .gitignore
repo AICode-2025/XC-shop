@@ -1,53 +1,66 @@
-# Claude Code - exclude personal (skills are committed)
+# 只提交源码、安全模板与公用配置
+.env*
+!.env.example
+*secret*
+*.key
+*.pem
+*.p12
+*.pfx
+id_rsa*
+
+node_modules/
+vendor/
+.venv/
+venv/
+__pycache__/
+
+dist/
+build/
+out/
+*.o
+*.class
+
+*.db*
+*.sqlite*
+*.ckpt*
+*.pt*
+*.onnx
+*.safetensors
+*.gguf
+*.bin
+
+.cache/
+logs/
+*.log
+tmp/
+
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.swp
+*~
+
+临时文件/
+
+# --- 代码仓补充忽略规则（2026-11-07 摊平合并）---
 /.claude/settings.json
 /.claude/settings.local.json
-
-# Dependencies
-/node_modules
-/vendor
-
-# Laravel
 /.phpunit.cache
 /.phpunit.result.cache
-/storage/*.key
 /storage/installed
 /storage/framework/htmlpurifier/
-
-# Environment
-.env
-.env.backup
-.env.production
-
-# IDE
-/.idea
-/.vscode
 /.fleet
-
-# OS
-.DS_Store
 dump.rdb
-
-# Laravel Homestead
 Homestead.json
 Homestead.yaml
-
-# Package manager
-npm-debug.log
 yarn-error.log
 auth.json
-
-# Misc
 webpack.mix.js
 Envoy.blade.php
-
-# Dev docs
 /docs/devdocs/
 /docs/guide
-
-# Scripts
 /scripts/
-
-# Scribe generated files
 .scribe/
 .scribe_panel/
 resources/views/scribe/
@@ -56,7 +69,14 @@ public/docs/
 storage/framework/scribe_panel_build/
 public/vendor/scribe/
 public/vendor/scribe_panel/
-
-# SEO generated files (runtime generated, do not commit)
 public/llms.txt
 public/robots.txt
+
+# --- zwxc-custom: GeoNames / GeoLite2 原始数据与离线库（禁止提交大体积数据） ---
+/storage/app/customgeo/
+/storage/app/geolite2/
+*.mmdb
+allCountries.zip
+allCountries.txt
+countryInfo.txt
+geonames*/

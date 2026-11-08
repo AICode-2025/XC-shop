@@ -6,6 +6,9 @@ return [
     App\Providers\AuthServiceProvider::class,
     App\Providers\HorizonServiceProvider::class,
 
+    // zwxc-custom: GeoNames / GeoLite2 集成（app/CustomGeo，不修改 InnoShop 原生 provider）
+    App\CustomGeo\CustomGeoServiceProvider::class,
+
     // Laravel Framework Service Providers...
     Illuminate\Cache\CacheServiceProvider::class,
     Illuminate\Database\DatabaseServiceProvider::class,
