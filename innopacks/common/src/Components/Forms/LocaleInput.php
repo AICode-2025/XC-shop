@@ -37,6 +37,8 @@ class LocaleInput extends Component
 
     public bool $translate;
 
+    public bool $fillAll;
+
     public function __construct(
         string $name = '',
         string $type = 'input',
@@ -50,6 +52,7 @@ class LocaleInput extends Component
         bool $generate = false,
         string $column = '',
         bool $translate = true,
+        bool $fillAll = false,
     ) {
         $this->name         = $name;
         $this->type         = $type;
@@ -63,6 +66,7 @@ class LocaleInput extends Component
         $this->generate     = $generate;
         $this->column       = $column;
         $this->translate    = $translate && has_translator();
+        $this->fillAll      = $fillAll;
     }
 
     public function render(): mixed

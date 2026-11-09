@@ -33,8 +33,11 @@ class Textarea extends Component
 
     public string $localeCode;
 
+    public bool $fillAll;
+
     public function __construct(string $name, string $title, mixed $value = null, string $description = '', bool $required = false,
-        bool $multiple = false, string $column = '', bool $generate = false, bool $translate = false, string $localeCode = '')
+        bool $multiple = false, string $column = '', bool $generate = false, bool $translate = false, string $localeCode = '',
+        bool $fillAll = false)
     {
         if (! $multiple) {
             $value = html_entity_decode($value, ENT_QUOTES);
@@ -50,6 +53,7 @@ class Textarea extends Component
         $this->generate    = $generate;
         $this->translate   = $translate && has_translator();
         $this->localeCode  = $localeCode;
+        $this->fillAll     = $fillAll;
     }
 
     /**

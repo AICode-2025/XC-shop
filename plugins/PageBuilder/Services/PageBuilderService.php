@@ -62,7 +62,8 @@ class PageBuilderService
      */
     private function getHomePageSettings(): array
     {
-        $design_settings = plugin_setting('page_builder', 'modules');
+        // 兼容旧键名 page_builder.modules，新数据统一写 PageBuilder
+        $design_settings = plugin_setting('PageBuilder', 'modules') ?: setting('page_builder.modules');
 
         if (empty($design_settings) || empty($design_settings['modules'])) {
             $demo_data       = DemoRepo::getHomeDemoData();
@@ -78,7 +79,7 @@ class PageBuilderService
                 }, $demo_data),
             ];
 
-            SettingRepo::getInstance()->updatePluginValue('page_builder', 'modules', $design_settings);
+            SettingRepo::getInstance()->updatePluginValue('PageBuilder', 'modules', $design_settings);
         }
 
         return $design_settings;
@@ -122,7 +123,7 @@ class PageBuilderService
         $moduleData = DesignService::getInstance()->handleRequestModules(['modules' => $modules]);
 
         if ($page === 'home') {
-            SettingRepo::getInstance()->updatePluginValue('page_builder', 'modules', $moduleData);
+            SettingRepo::getInstance()->updatePluginValue('PageBuilder', 'modules', $moduleData);
         } else {
             $pageModel = $this->findPage($page);
             if (! $pageModel) {
@@ -176,7 +177,7 @@ class PageBuilderService
             }, $demo_data),
         ];
 
-        SettingRepo::getInstance()->updatePluginValue('page_builder', 'modules', $moduleData);
+        SettingRepo::getInstance()->updatePluginValue('PageBuilder', 'modules', $moduleData);
 
         fire_hook_action('admin.design.import_demo.after', $moduleData);
 

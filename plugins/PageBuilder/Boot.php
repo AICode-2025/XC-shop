@@ -14,23 +14,20 @@ use InnoShop\Plugin\Core\BaseBoot;
 class Boot extends BaseBoot
 {
     /**
-     * Flag to prevent duplicate initialization
-     *
-     * @var bool
+     * 容器级标记：Octane 下防重复，`route:cache` 新建容器时仍能重新注册钩子。
      */
-    private static bool $initialized = false;
+    private const BOOTED_KEY = 'page_builder.booted';
 
     /**
      * @return void
      */
     public function init(): void
     {
-        // Prevent duplicate initialization
-        if (self::$initialized) {
+        if (app()->bound(self::BOOTED_KEY)) {
             return;
         }
 
-        self::$initialized = true;
+        app()->instance(self::BOOTED_KEY, true);
 
         $this->addPanelMenus();
         $this->addPageDesignButton();

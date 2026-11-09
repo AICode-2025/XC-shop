@@ -72,11 +72,12 @@ class PluginServiceProvider extends ServiceProvider
     }
 
     /**
-     * Flag to prevent duplicate boot execution (important for Laravel Octane)
+     * 容器级 boot 标记，避免 Octane 重复执行。
      *
-     * @var bool
+     * 不能用静态属性：`route:cache` / `config:cache` 会在同一进程里新建一个应用容器，
+     * 静态标记会让新容器直接跳过 boot，导致缓存路由表里丢失全部插件路由。
      */
-    private static bool $booted = false;
+    private const BOOTED_KEY = 'plugin.provider.booted';
 
     /**
      * Boot Plugin Service Provider
@@ -85,11 +86,10 @@ class PluginServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // Prevent duplicate boot execution (especially important for Laravel Octane)
-        if (self::$booted) {
+        if ($this->app->bound(self::BOOTED_KEY)) {
             return;
         }
-        self::$booted = true;
+        $this->app->instance(self::BOOTED_KEY, true);
 
         $this->registerMigrations();
 

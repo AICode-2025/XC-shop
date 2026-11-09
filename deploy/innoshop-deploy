@@ -140,6 +140,10 @@ log "执行数据库迁移"
 $PHP artisan migrate --force --graceful 2>&1 | tail -8 || fail "迁移失败（未自动恢复数据库，dump 在 $BK）"
 touch storage/installed
 
+# ---------- 8.1 内置插件注册与启用（幂等） ----------
+log "注册并启用内置插件"
+$PHP artisan db:seed --class=PluginSeeder --force 2>&1 | tail -10 || fail "内置插件初始化失败"
+
 # ---------- 9. 缓存 ----------
 $PHP artisan optimize:clear >/dev/null 2>&1 || true
 $PHP artisan storage:link >/dev/null 2>&1 || true

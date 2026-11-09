@@ -30,6 +30,11 @@ if (! function_exists('plugin')) {
 
 if (! function_exists('plugin_setting')) {
     /**
+     * 读取插件设置。
+     *
+     * 设置统一存放在 settings.space = 插件 code（config.json 原名，如 FixedShipping）。
+     * 允许传 snake_case（fixed_shipping）或 "code.key" 形式，这里统一解析到插件真实 code。
+     *
      * @param  $code
      * @param  string  $key
      * @param  null  $default
@@ -37,12 +42,24 @@ if (! function_exists('plugin_setting')) {
      */
     function plugin_setting($code, string $key = '', $default = null): mixed
     {
-        $code = Str::snake($code);
+        [$code, $inlineKey] = array_pad(explode('.', (string) $code, 2), 2, null);
+
+        $space  = null;
+        $plugin = plugin($code) ?: plugin(Str::studly($code));
+        if ($plugin) {
+            $space = $plugin->getCode();
+        }
+        $space = $space ?: Str::snake($code);
+
+        $path = $space;
+        if ($inlineKey) {
+            $path .= '.'.$inlineKey;
+        }
         if ($key) {
-            return setting("$code.$key", $default);
+            $path .= '.'.$key;
         }
 
-        return setting("$code", $default);
+        return setting($path, $default);
     }
 }
 

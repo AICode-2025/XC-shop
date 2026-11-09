@@ -40,6 +40,7 @@
                        description="{{ __('panel/setting.store_name_desc') }}" />
 
 	    <x-common-form-textarea title="{{ __('panel/setting.store_description') }}" name="store_description" :multiple="true"
+	                          :fill-all="true"
 	                          :value="old('store_description', system_setting('store_description'))"
 	                          placeholder="{{ __('panel/setting.store_description') }}"
 	                          description="{{ __('panel/setting.store_description_desc') }}" />

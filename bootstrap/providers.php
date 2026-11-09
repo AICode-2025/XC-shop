@@ -24,4 +24,7 @@ return [
     InnoShop\Restapi\RestapiServiceProvider::class,
     InnoShop\Plugin\PluginServiceProvider::class,
     InnoShop\Devtools\DevtoolsServiceProvider::class,
+
+    // zwxc-custom: 后台 AI 翻译器（依赖 eventy，必须排在插件 provider 之后）
+    App\Providers\TranslatorServiceProvider::class,
 ];

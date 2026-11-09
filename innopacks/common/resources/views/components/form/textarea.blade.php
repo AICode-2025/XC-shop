@@ -47,6 +47,7 @@
       :placeholder="$title"
       :name-format="$useTranslationsFormat ? 'translations' : 'direct'"
       :description="$description"
+      :fill-all="$fillAll ?? false"
     />
   @endif
   {{ $slot }}

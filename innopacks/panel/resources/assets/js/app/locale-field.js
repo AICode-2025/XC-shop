@@ -257,8 +257,8 @@ const localeField = {
 
   /**
    * Bind smart fill button in modal footer.
-   * If translator is available: translate primary language text to each empty language via API.
-   * If no translator: copy primary language text directly to each empty language field.
+   * Default: fill/translate empty languages only.
+   * fill-all mode: overwrite every target language, translating each one (fallback to source text when translation fails).
    */
   bindSmartFillButton() {
     $(document).on("click", ".locale-smart-fill-btn", function () {
@@ -266,10 +266,13 @@ const localeField = {
       $btn.blur();
       const $wrapper = $btn.closest(".locale-field-wrapper");
       const hasTranslator = $btn.data("has-translator") === true || $btn.data("has-translator") === "true";
+      const fillAll = $btn.data("fill-all") === true || $btn.data("fill-all") === "true";
       const primaryLocale = $btn.data("primary-locale");
       const msgNoEmpty = $btn.data("msg-no-empty");
       const msgTranslated = $btn.data("msg-translated");
       const msgCopied = $btn.data("msg-copied");
+      const msgTranslatedAll = $btn.data("msg-translated-all");
+      const msgCopiedAll = $btn.data("msg-copied-all");
 
       // Get primary language text from modal primary row (user may have edited it)
       const $modalPrimaryRow = $wrapper.find('.locale-modal-row[data-locale="' + primaryLocale + '"]');
@@ -279,20 +282,23 @@ const localeField = {
         return;
       }
 
-      // Collect empty language rows
-      const emptyRows = [];
+      // Collect target rows: all languages in fill-all mode, otherwise only empty ones
+      const targetRows = [];
       $wrapper.find(".locale-modal-row").each(function () {
         const $row = $(this);
         const locale = $row.data("locale");
         if (locale === primaryLocale) return;
 
         const $input = $row.find("input.form-control, textarea.form-control");
-        if (!$input.val() || !$input.val().trim()) {
-          emptyRows.push({ $row, locale, $input });
+        if ($input.length === 0) return;
+
+        const isEmpty = !$input.val() || !$input.val().trim();
+        if (fillAll || isEmpty) {
+          targetRows.push({ $row, locale, $input });
         }
       });
 
-      if (emptyRows.length === 0) {
+      if (targetRows.length === 0) {
         if (window.inno && window.inno.alert) {
           window.inno.alert({
             msg: msgNoEmpty,
@@ -303,14 +309,14 @@ const localeField = {
       }
 
       if (hasTranslator) {
-        // Translate via API for each empty language
+        // Translate via API for each target language
         $btn.prop("disabled", true);
         const originalHtml = $btn.html();
         $btn.html('<span class="spinner-border spinner-border-sm me-1" role="status"></span>' + $btn.text().trim());
         let completed = 0;
-        const total = emptyRows.length;
+        const total = targetRows.length;
 
-        emptyRows.forEach(function (item) {
+        targetRows.forEach(function (item) {
           axios
             .post(`${getPanelBaseUrl()}/translations/translate-text`, {
               source: primaryLocale,
@@ -318,12 +324,11 @@ const localeField = {
               text: primaryText,
             })
             .then(function (res) {
-              res.data.forEach(function (translation) {
-                item.$input.val(translation.result);
-              });
+              const translated = (res.data || []).map((t) => t.result).filter((v) => v && String(v).trim()).join("");
+              item.$input.val(translated || primaryText);
             })
             .catch(function (err) {
-              // Fallback to copy on error
+              // Fallback to source text on error so no language stays empty
               item.$input.val(primaryText);
             })
             .finally(function () {
@@ -332,8 +337,9 @@ const localeField = {
                 $btn.prop("disabled", false);
                 $btn.html(originalHtml);
                 if (window.inno && window.inno.alert) {
+                  const template = fillAll ? msgTranslatedAll || msgTranslated : msgTranslated;
                   window.inno.alert({
-                    msg: msgTranslated.replace(":count", completed),
+                    msg: template.replace(":count", completed),
                     type: "success",
                   });
                 }
@@ -342,15 +348,22 @@ const localeField = {
         });
       } else {
         // Direct copy
-        emptyRows.forEach(function (item) {
+        targetRows.forEach(function (item) {
           item.$input.val(primaryText);
         });
 
         if (window.inno && window.inno.alert) {
+          const template = fillAll ? msgCopiedAll || msgCopied : msgCopied;
           window.inno.alert({
-            msg: msgCopied.replace(":count", emptyRows.length),
+            msg: template.replace(":count", targetRows.length),
             type: "success",
           });
+          if (fillAll) {
+            const msgNoTranslator = $btn.data("msg-no-translator");
+            if (msgNoTranslator) {
+              window.inno.alert({ msg: msgNoTranslator, type: "warning" });
+            }
+          }
         }
       }
     });

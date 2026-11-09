@@ -198,14 +198,21 @@ $modalId = 'locale-modal-' . $uid;
           </div>
           <div class="modal-footer d-flex justify-content-between">
             @php($hasTranslator = has_translator())
+            @php($fillAll = $fillAll ?? false)
             <button type="button" class="btn btn-outline-secondary locale-smart-fill-btn"
                     data-has-translator="{{ $hasTranslator ? 'true' : 'false' }}"
+                    data-fill-all="{{ $fillAll ? 'true' : 'false' }}"
                     data-primary-locale="{{ $primaryCode }}"
                     data-msg-no-empty="{{ __('panel/common.no_empty_languages') }}"
                     data-msg-translated="{{ __('panel/common.translated_languages') }}"
                     data-msg-copied="{{ __('panel/common.copied_languages') }}"
+                    data-msg-translated-all="{{ __('panel/common.translated_all') }}"
+                    data-msg-copied-all="{{ __('panel/common.copied_all') }}"
+                    data-msg-no-translator="{{ __('panel/common.no_translator') }}"
                     data-msg-error="{{ __('panel/common.translate_error') }}">
-              @if($hasTranslator)
+              @if($fillAll)
+                <i class="bi bi-arrow-right-circle me-1"></i>{{ __('panel/common.copy_all') }}
+              @elseif($hasTranslator)
                 <i class="bi bi-translate me-1"></i>{{ __('panel/common.translate_empty') }}
               @else
                 <i class="bi bi-arrow-right-circle me-1"></i>{{ __('panel/common.copy_empty') }}

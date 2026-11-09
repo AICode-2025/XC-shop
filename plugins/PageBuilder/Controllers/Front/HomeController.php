@@ -22,7 +22,8 @@ class HomeController extends BaseController
      */
     public function index(): mixed
     {
-        $modules = plugin_setting('page_builder', 'modules');
+        // 兼容旧键名 page_builder.modules，新数据统一写 PageBuilder
+        $modules = plugin_setting('PageBuilder', 'modules') ?: setting('page_builder.modules');
         $device  = request()->get('device', 'pc');
 
         if (empty($modules) || empty($modules['modules'])) {
