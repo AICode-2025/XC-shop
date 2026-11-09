@@ -98,6 +98,7 @@
 | 回滚 | 保留上一版打包件 + 数据库备份；回滚 = 覆盖代码 + 恢复库 + 清 `bootstrap/cache` + reload |
 | **面板改动后复核** | 任何面板操作（改网站目录/SSL/伪静态/保存配置）后执行 `grep -E 'root\|ssl_certificate' /www/server/panel/vhost/nginx/shop.zwxc.cc.conf`，root 非 `…/public` 或缺少 `ssl_certificate` 时重跑 `20261108-1200-宝塔站点登记-fix-vhost.sh` |
 | 面板内改运行目录 | 「网站 → 设置 → 网站目录 → 运行目录」选 `/public` 并保存，等效于手工改 root，可长期由面板维护 |
+| **后台 444 打不开** | 宝塔 WAF 开启「禁止中国大陆以外地区访问」（`drop_abroad`，状态码 444），该规则在 301/302 响应阶段复查 → 后台入口 `/panel`、`/panel/*` 的跳转对境外/归属未知 IP 直接 444；前台首页 200、后台登录页 200，容易被误判为代码故障。`nginx -T` 里查不到 444，因为它在 `header_filter_by_lua` 里 | 已在 2026-11-09 关闭该选项（备份 `/root/btwaf-config-bak-20261109-012452.json`，脚本 `临时文件/产物/20261109-0130-关闭WAF地域拦截-fix.sh`）。跨境站不要开全局地域封禁；确需限制时用 WAF「URL 白名单」按路径放行（如 `^/panel`），不要整站封禁 |
 
 ## 7. 已知遗留与风险
 

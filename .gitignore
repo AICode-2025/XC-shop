@@ -19,6 +19,7 @@ build/
 out/
 *.o
 *.class
+*.zip
 
 *.db*
 *.sqlite*
@@ -36,6 +37,7 @@ tmp/
 
 .vscode/
 .idea/
+.codebuddy/
 .DS_Store
 Thumbs.db
 *.swp

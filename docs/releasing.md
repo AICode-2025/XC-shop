@@ -21,7 +21,7 @@ git tag -a vX.Y.Z -m "vX.Y.Z"
 git push origin vX.Y.Z
 
 # 4. 等 ~2 分钟，workflow 自动构建并发布
-#    https://github.com/innocommerce/innoshop/actions
+#    https://github.com/AICode-2025/XC-shop/actions
 ```
 
 ---
@@ -72,8 +72,8 @@ git push origin vX.Y.Z
 
 | 步骤 | 命令 / 链接 |
 |---|---|
-| 看 workflow 是否成功 | https://github.com/innocommerce/innoshop/actions |
-| 看 Release 是否完整 | https://github.com/innocommerce/innoshop/releases/tag/vX.Y.Z |
+| 看 workflow 是否成功 | https://github.com/AICode-2025/XC-shop/actions |
+| 看 Release 是否完整 | https://github.com/AICode-2025/XC-shop/releases/tag/vX.Y.Z |
 | 检查 zip 体积 | `gh release view vX.Y.Z --json assets -q '.assets[].size'`（预期 30-40 MB） |
 | 验证 zip 内 version | 下载 zip → 解压 → `grep 'version' innoshop/common/config/innoshop.php` |
 | 验证 composer 渠道 | `composer create-project innoshop/innoshop test-install`（Packagist 拉取需 1-2 分钟） |
@@ -131,7 +131,7 @@ gh release edit vX.Y.Z --notes-file ./release-notes.md
 
 Composer 渠道由 Packagist 提供，**首次提交需在 Packagist 注册**：
 - https://packagist.org/packages/submit
-- 仓库 URL：`https://github.com/innocommerce/innoshop`
+- 仓库 URL：`https://github.com/AICode-2025/XC-shop`
 - 设置 GitHub webhook 自动同步
 
 ZIP 渠道由 `release.yml` 全自动，每次 push tag 自动更新。
