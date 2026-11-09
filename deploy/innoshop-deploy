@@ -1,0 +1,169 @@
+#!/usr/bin/env bash
+# InnoShop 生产部署（幂等 / 可回滚 / 带锁 / 快照保留最近 KEEP 份）
+# 用法：innoshop-deploy [--sha <commit>] [--build /path/build.tar.gz] [--force]
+#      快照保留数用环境变量覆盖：KEEP=3 innoshop-deploy
+set -Eeuo pipefail
+
+APP="${APP:-/www/wwwroot/shop.zwxc.cc}"
+BRANCH="${BRANCH:-production}"
+REMOTE="${REMOTE:-origin}"
+DOMAIN="${DOMAIN:-shop.zwxc.cc}"
+PHP="/www/server/php/83/bin/php -d disable_functions="
+LOCK="/var/lock/innoshop-deploy.lock"
+BACKUP_ROOT="/www/backup"
+STATE_DIR="/var/lib/innoshop"
+KEEP="${KEEP:-5}"
+VHOST="/www/server/panel/vhost/nginx/${DOMAIN}.conf"
+
+# 只保留最近 KEEP 份 rel-* 快照（保留上限含本次快照）
+prune() {
+  local keep="${KEEP:-5}" i=0 d
+  [ "$keep" -ge 1 ] 2>/dev/null || keep=5
+  [ -d "$BACKUP_ROOT" ] || return 0
+  while IFS= read -r d; do
+    i=$((i+1))
+    [ "$i" -le "$keep" ] && continue
+    rm -rf -- "$d" && log "清理旧快照 $(basename "$d")"
+  done < <(ls -1d "$BACKUP_ROOT"/rel-* 2>/dev/null | sort -r)
+}
+
+SHA=""; BUILD_PKG=""; FORCE=0
+while [ $# -gt 0 ]; do
+  case "$1" in
+    --sha)   SHA="${2:-}"; shift 2 ;;
+    --build) BUILD_PKG="${2:-}"; shift 2 ;;
+    --force) FORCE=1; shift ;;
+    *) echo "未知参数 $1" >&2; exit 2 ;;
+  esac
+done
+
+log()  { printf '[%s] %s\n' "$(date '+%F %T')" "$*"; }
+fail() { log "FAIL: $*"; exit 1; }
+
+mkdir -p "$STATE_DIR"
+exec 9>"$LOCK"
+flock -n 9 || { log "已有部署在运行，退出"; exit 75; }
+
+cd "$APP" || fail "站点目录不存在"
+[ -f .env ] || fail ".env 缺失"
+[ -d .git ] || fail "站点目录不是 git 仓库，先执行初始化"
+
+PREV_SHA=$(git rev-parse HEAD 2>/dev/null || echo none)
+log "当前版本 ${PREV_SHA:0:8}"
+
+# ---------- 1. 预检 ----------
+AVAIL_KB=$(df -Pk / | awk 'NR==2{print $4}')
+[ "$AVAIL_KB" -gt 3145728 ] || fail "磁盘可用不足 3G（当前 $((AVAIL_KB/1024))M）"
+MEM_AVAIL=$(free -m | awk 'NR==2{print $7}')
+[ "$MEM_AVAIL" -gt 200 ] || fail "可用内存不足 200M（当前 ${MEM_AVAIL}M）"
+grep -qE '^\s*root\s+.*/public\s*;' "$VHOST" 2>/dev/null || fail "vhost root 未指向 public，先跑 fix-vhost"
+grep -q 'ssl_certificate' "$VHOST" 2>/dev/null || fail "vhost 缺 SSL 配置"
+log "预检通过（磁盘 $((AVAIL_KB/1024/1024))G 可用 / 内存 ${MEM_AVAIL}M 可用）"
+prune
+
+# ---------- 2. 目标版本 ----------
+git fetch --prune --tags "$REMOTE" "$BRANCH" 2>/dev/null || fail "git fetch 失败"
+TARGET_SHA=$(git rev-parse "$REMOTE/$BRANCH")
+if [ -n "$SHA" ] && [ "$SHA" != "$TARGET_SHA" ]; then
+  git cat-file -e "$SHA^{commit}" 2>/dev/null || fail "指定 commit $SHA 不存在"
+  TARGET_SHA=$(git rev-parse "$SHA^{commit}")
+fi
+if [ "$TARGET_SHA" = "$PREV_SHA" ] && [ "$FORCE" -eq 0 ]; then
+  log "已是目标版本 ${TARGET_SHA:0:8}，跳过"
+  exit 0
+fi
+log "目标版本 ${TARGET_SHA:0:8}（${BRANCH}）"
+
+# ---------- 3. 快照 ----------
+TS=$(date +%Y%m%d-%H%M%S)
+BK="$BACKUP_ROOT/rel-$TS"
+mkdir -p "$BK"
+DBU=$(grep '^DB_USERNAME=' .env | cut -d= -f2-)
+DBP=$(grep '^DB_PASSWORD=' .env | cut -d= -f2-)
+DBN=$(grep '^DB_DATABASE=' .env | cut -d= -f2-)
+/www/server/mysql/bin/mysqldump -u"$DBU" -p"$DBP" --single-transaction --quick \
+  --default-character-set=utf8mb4 "$DBN" 2>/dev/null | gzip > "$BK/db.sql.gz"
+[ -s "$BK/db.sql.gz" ] || fail "数据库备份失败，终止部署"
+tar -czf "$BK/code.tar.gz" --exclude=./vendor --exclude=./node_modules --exclude=./storage --exclude=./.git -C "$APP" . 2>/dev/null
+cp -f "$VHOST" "$BK/vhost.conf" 2>/dev/null || true
+echo "$PREV_SHA" > "$BK/PREV_SHA"
+LOCK_MD5=$(md5sum composer.lock 2>/dev/null | awk '{print $1}' || echo none)
+log "快照完成 $BK（DB $(du -h "$BK/db.sql.gz" | cut -f1) / 代码 $(du -h "$BK/code.tar.gz" | cut -f1)）"
+
+# ---------- 4. 回滚函数 ----------
+rollback() {
+  log "开始回滚到 ${PREV_SHA:0:8}"
+  if [ "$PREV_SHA" != "none" ]; then
+    git reset --hard "$PREV_SHA" >/dev/null 2>&1 || log "git reset 回滚失败"
+  fi
+  $PHP artisan optimize:clear >/dev/null 2>&1 || true
+  $PHP artisan config:cache >/dev/null 2>&1 || true
+  $PHP artisan view:cache >/dev/null 2>&1 || true
+  /www/server/nginx/sbin/nginx -t >/dev/null 2>&1 && systemctl reload nginx
+  systemctl restart innoshop-queue >/dev/null 2>&1 || true
+  echo "$TARGET_SHA" > "$STATE_DIR/REVISION.failed"
+  log "已回滚，失败版本记录于 $STATE_DIR/REVISION.failed"
+}
+trap 'CODE=$?; if [ $CODE -ne 0 ]; then rollback; fi; exit $CODE' ERR
+
+# ---------- 5. 更新代码 ----------
+git reset --hard "$TARGET_SHA" >/dev/null 2>&1 || fail "代码检出失败"
+rm -f config/debugbar.php 2>/dev/null || true
+chown -R www:www "$APP" 2>/dev/null || true
+log "代码已更新到 ${TARGET_SHA:0:8}"
+
+# ---------- 6. 前端产物 ----------
+if [ -n "$BUILD_PKG" ] && [ -f "$BUILD_PKG" ]; then
+  mkdir -p public/build
+  tar -xzf "$BUILD_PKG" -C public/build || fail "前端产物解包失败"
+  chown -R www:www public/build
+  log "前端产物已更新（$(find public/build -type f | wc -l) 个文件）"
+else
+  [ -f public/build/front/css/app.css ] || log "WARN: 未提供前端产物且本地缺失，页面样式可能异常"
+fi
+
+# ---------- 7. 依赖 ----------
+NEW_MD5=$(md5sum composer.lock 2>/dev/null | awk '{print $1}')
+if [ "$NEW_MD5" != "$LOCK_MD5" ]; then
+  log "composer.lock 变化，执行依赖安装"
+  tar -czf "$BK/vendor.tar.gz" vendor 2>/dev/null || true
+  COMPOSER_ALLOW_SUPERUSER=1 $PHP -d memory_limit=-1 /usr/bin/composer install \
+    --no-dev --no-interaction --prefer-dist --optimize-autoloader --no-scripts 2>&1 | tail -3
+  chown -R www:www vendor
+else
+  COMPOSER_ALLOW_SUPERUSER=1 $PHP -d memory_limit=-1 /usr/bin/composer dump-autoload --optimize --no-interaction >/dev/null 2>&1 || true
+  log "依赖未变，仅刷新自动加载"
+fi
+
+# ---------- 8. 迁移 ----------
+log "执行数据库迁移"
+$PHP artisan migrate --force --graceful 2>&1 | tail -8 || fail "迁移失败（未自动恢复数据库，dump 在 $BK）"
+touch storage/installed
+
+# ---------- 9. 缓存 ----------
+$PHP artisan optimize:clear >/dev/null 2>&1 || true
+$PHP artisan storage:link >/dev/null 2>&1 || true
+$PHP artisan config:cache >/dev/null 2>&1 || fail "config:cache 失败"
+$PHP artisan view:cache >/dev/null 2>&1 || log "WARN: view:cache 跳过"
+$PHP artisan route:cache >/dev/null 2>&1 || { log "WARN: route:cache 失败，回退为清除"; $PHP artisan optimize:clear >/dev/null 2>&1 || true; }
+chown -R www:www storage bootstrap/cache 2>/dev/null || true
+
+# ---------- 10. 队列 ----------
+$PHP artisan queue:restart 2>/dev/null || true
+systemctl is-active innoshop-queue >/dev/null 2>&1 || systemctl start innoshop-queue 2>/dev/null || true
+
+# ---------- 11. 健康检查 ----------
+ok=0
+for i in 1 2; do
+  code=$(curl -s -o /dev/null -w '%{http_code}' -k "https://127.0.0.1/" -H "Host: ${DOMAIN}" --max-time 15 || echo 000)
+  [ "$code" = "200" ] && ok=$((ok+1))
+  log "健康检查第 $i 次: $code"
+  sleep 3
+done
+[ "$ok" -ge 1 ] || fail "健康检查失败（连续 2 次非 200）"
+
+# ---------- 12. 落账与清理 ----------
+echo "$TARGET_SHA $(date '+%F %T')" > "$STATE_DIR/REVISION"
+rm -f "$STATE_DIR/REVISION.failed"
+prune
+log "部署成功 ${PREV_SHA:0:8} -> ${TARGET_SHA:0:8}"

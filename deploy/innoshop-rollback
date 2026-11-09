@@ -1,0 +1,53 @@
+#!/usr/bin/env bash
+# 回滚：innoshop-rollback [rel-<时间戳> | prev]
+set -Eeuo pipefail
+APP="${APP:-/www/wwwroot/shop.zwxc.cc}"
+DOMAIN="${DOMAIN:-shop.zwxc.cc}"
+PHP="/www/server/php/83/bin/php -d disable_functions="
+BACKUP_ROOT="/www/backup"
+STATE_DIR="/var/lib/innoshop"
+
+log() { printf '[%s] %s\n' "$(date '+%F %T')" "$*"; }
+cd "$APP" || { log "站点目录不存在"; exit 1; }
+
+TARGET="${1:-prev}"
+if [ "$TARGET" = "prev" ]; then
+  BK=$(ls -1d "$BACKUP_ROOT"/rel-* 2>/dev/null | sort -r | head -1)
+  [ -n "$BK" ] || { log "没有可用快照"; exit 1; }
+else
+  case "$TARGET" in
+    /*) BK="$TARGET" ;;
+    rel-*) BK="$BACKUP_ROOT/$TARGET" ;;
+    *) BK="$BACKUP_ROOT/rel-$TARGET" ;;
+  esac
+fi
+[ -d "$BK" ] || { log "快照不存在: $BK"; exit 1; }
+
+PREV_SHA=$(cat "$BK/PREV_SHA" 2>/dev/null || echo none)
+log "使用快照 $BK（目标 ${PREV_SHA:0:8}）"
+
+if [ "$PREV_SHA" != "none" ]; then
+  git cat-file -e "$PREV_SHA^{commit}" 2>/dev/null || { log "commit 不存在，改用代码快照"; PREV_SHA=none; }
+fi
+if [ "$PREV_SHA" != "none" ]; then
+  git reset --hard "$PREV_SHA"
+else
+  log "按 tar 快照还原代码"
+  tar -xzf "$BK/code.tar.gz" -C "$APP"
+fi
+[ -f "$BK/vendor.tar.gz" ] && tar -xzf "$BK/vendor.tar.gz" -C "$APP" && log "vendor 已还原"
+
+$PHP artisan optimize:clear >/dev/null 2>&1 || true
+$PHP artisan config:cache >/dev/null 2>&1 || true
+$PHP artisan view:cache >/dev/null 2>&1 || true
+$PHP artisan route:cache >/dev/null 2>&1 || true
+chown -R www:www "$APP" 2>/dev/null || true
+chmod -R 775 storage bootstrap/cache 2>/dev/null || true
+
+systemctl restart innoshop-queue >/dev/null 2>&1 || true
+/www/server/nginx/sbin/nginx -t >/dev/null 2>&1 && systemctl reload nginx
+
+code=$(curl -s -o /dev/null -w '%{http_code}' -k "https://127.0.0.1/" -H "Host: ${DOMAIN}" --max-time 15 || echo 000)
+echo "$PREV_SHA $(date '+%F %T') rollback-from-$BK" > "$STATE_DIR/REVISION"
+log "回滚完成，健康检查 HTTP ${code}"
+[ "$code" = "200" ] || exit 1
